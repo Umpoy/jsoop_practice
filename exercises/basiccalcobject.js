@@ -3,7 +3,8 @@ class Calculator {
 	constructor() {
 		//takes in nothing
 		//make storage for the operator and the numbers
-		this.numbers = []
+		this.numberArray = []
+		this.operator = null;
 
 	}
 	loadOperator(operator) {
@@ -13,10 +14,11 @@ class Calculator {
 		//save the op to the constructor storage
 		//return true
 		//or return false if not the right operator
-		if (operator !== '+' || '-' || '*' || '/') {
+		if (!(operator !== '+' || operator !== '-' || operator !== '*' || operator !== '/')) {
 			return false
 		}
-		return operator
+		this.operator = operator
+		return true
 
 	}
 	loadNumber(number) {
@@ -26,13 +28,16 @@ class Calculator {
 		//if it is a number, and we have 2 or fewer numbers, store it
 		//return the number of numbers stored
 		//otherwise return false (too many numbers stored)
-		if (typeof number !== 'number') {
+		if (typeof number !== 'number' || this.numberArray.length > 1) {
 			return false
 		}
-		if (this.numbers.length < 2) {
-			this.numbers.push(number);
+		if (this.numberArray == 2) {
+			return false
 		}
-		return this.numbers.length
+		if (this.numberArray.length < 2) {
+			this.numberArray.push(number);
+		}
+		return this.numberArray.length
 	}
 	calculate() {
 		//calculate the result of the stored numbers and operator
@@ -40,6 +45,22 @@ class Calculator {
 		//calculates with the operator and 2 numbers
 		//clears out the stored numbers
 		//returns the calculated result
-
+		let result = null;
+		switch (this.operator) {
+			case '+':
+				result = this.numberArray[0] + this.numberArray[1];
+				break;
+			case '-':
+				result = this.numberArray[0] - this.numberArray[1];
+				break;
+			case '*':
+				result = this.numberArray[0] * this.numberArray[1];
+				break;
+			case '/':
+				result = this.numberArray[0] / this.numberArray[1];
+				break;
+		}
+		this.numberArray = []
+		return result
 	}
 }
